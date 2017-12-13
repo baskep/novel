@@ -6,10 +6,16 @@
 > 使用vue完成的页面的渲染，使用webpack完成模块的加载或打包，CSS预处理器则是用的SCSS，请求的数据主要由`追书神器`提供的第三方api，使用axios代替vue-resource完成请求的发送，涉及到的跨域问题目前使用的是第三方代理所提供的接口`https://bird.ioliu.cn/v1/` 
 
 ##  部分效果图
-   5.1.电影首页 <br>
+   1.书架 <br>
    ![image](https://github.com/zt14362/noval/blob/master/examples/Bookself.png) <br>
+   2.精选 <br>
+   ![image](https://github.com/zt14362/noval/blob/master/examples/Featured.png) <br>
+   3.分类 <br>
+   ![image](https://github.com/zt14362/noval/blob/master/examples/Cat.png) <br>
+   4.排行 <br>
+   ![image](https://github.com/zt14362/noval/blob/master/examples/Rank.png) <br>
    
-## Build Setup
+## 项目效果
 
 ``` bash
 # install dependencies
