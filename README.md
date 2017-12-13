@@ -8,14 +8,23 @@
 ##  部分效果图
    1.书架 <br>
    ![image](https://github.com/zt14362/noval/blob/master/examples/Bookself.png) <br>
+   
    2.精选 <br>
    ![image](https://github.com/zt14362/noval/blob/master/examples/Featured.png) <br>
+   
    3.分类 <br>
    ![image](https://github.com/zt14362/noval/blob/master/examples/Cat.png) <br>
+   
    4.排行 <br>
    ![image](https://github.com/zt14362/noval/blob/master/examples/Rank.png) <br>
    
-## 项目效果
+## 目前还存在的问题
+> 1.样式、组件的复用、方法的封装、动态效果还有很多需要完善或修改的地方
+> 2.部分功能还未实现
+> 3.未对各种移动终端进行适配
+> 4.后期想用vuex重构，目前暂未使用
+
+## 项目运行
 
 ``` bash
 # install dependencies
