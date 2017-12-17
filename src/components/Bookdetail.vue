@@ -99,9 +99,8 @@
            
             </div>
         </div>
-        <Bookbar></Bookbar>
+        <Bookbar :bookdata="bookdata"></Bookbar>
     </section>
-
 </template>
 
 <script>
@@ -113,7 +112,7 @@ export default {
     name: 'bookdetail',
     data() {
         return {
-            bookdata: Object,
+            bookdata: {},
             recommends: [],
             comments: [],
             bookid: '',
@@ -356,6 +355,7 @@ export default {
 }
 
 .recommend {
+    margin-bottom: 70px;
     .recommend-title {
         margin-top: 15px;
         border-left: 2px solid #ed424b;

@@ -4,7 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './App';
 
-import Empty from './components/Empty.vue'; // 还有很大的错误
+import Bookshelf from './components/Bookshelf.vue';
 import Featured from './components/Featured.vue';
 import Classfication from './components/Cat.vue';
 import Bookdetail from './components/Bookdetail.vue';
@@ -23,7 +23,7 @@ Vue.use(VueRouter);
 let routes = [{
         name: 'bookshelf',
         path: '/bookshelf',
-        component: Empty
+        component: Bookshelf
     },
     {
         name: 'featured',
