@@ -4,16 +4,17 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './App';
 
-import Bookshelf from './components/Bookshelf.vue';
-import Featured from './components/Featured.vue';
-import Classfication from './components/Cat.vue';
-import Bookdetail from './components/Bookdetail.vue';
-import Recommend from './components/Recommend.vue';
-import Categorydetail from './components/Catgorydetail.vue';
-import Rank from './components/Rank.vue';
-import PageLoading from './components/PageLoading.vue';
-import Search from './components/Search.vue';
-import Searchresult from './components/Searchreuslt.vue';
+import Bookshelf from './components/Bookshelf/Bookshelf.vue';
+import Featured from './components/Featured/Featured.vue';
+import Classfication from './components/Cat/Cat.vue';
+import Bookdetail from './components/Bookdetail/Bookdetail.vue';
+import Recommend from './components/Recommend/Recommend.vue';
+import Categorydetail from './components/Catgorydetail/Catgorydetail.vue';
+import Rank from './components/Rank/Rank.vue';
+import Search from './components//Search/Search.vue';
+import Searchresult from './components/Searchresult/Searchresult.vue';
+import Chapter from './components/Chapter/Chapter.vue';
+import Read from './components/Read/Read.vue';
 
 // 安装 "VueRouter"这个插件
 /* eslint-disable no-new */
@@ -56,11 +57,6 @@ let routes = [{
         component: Rank
     },
     {
-        name: 'pageloading',
-        path: '/pageloading',
-        component: PageLoading
-    },
-    {
         name: 'search',
         path: '/search',
         component: Search
@@ -69,6 +65,16 @@ let routes = [{
         name: 'searchresult',
         path: '/searchresult',
         component: Searchresult
+    },
+    {
+        name: 'chapter',
+        path: '/chapter',
+        component: Chapter
+    },
+    {
+        name: 'read',
+        path: '/read',
+        component: Read
     }
 ];
 

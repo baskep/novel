@@ -1,0 +1,32 @@
+.book-tool {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1003;
+    display: flex;
+    justify-content: space-between;
+    .add-book {
+        width: 50%;
+        height: 40px;
+        padding: 10px 0;
+        text-align: center;
+        background-color: #fff;
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        p {
+            color: #999;
+        }
+    }
+    .read {
+        width: 50%;
+        background-color: #ed424b;
+        text-align: center;
+        p {
+            color: #fff;
+            font-size: 18px;
+            line-height: 60px;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+.chapter {
+    margin-top: 40px;
+    & > div {
+        display: flex;
+        border-bottom: 1px solid #f0f1f2;
+        height: 40px;
+        justify-content: space-between;
+        align-items: center;
+        & > span:nth-child(1) {
+            margin-left: 10px;
+        }
+        & > span:nth-child(2) {
+            margin-right: 10px;
+        }
+        & > img {
+            margin-right: 10px;
+            width: 12px;
+            height: 12px;
+        }
+    }
+    span {
+        font-size: 13px;
+    }
+}

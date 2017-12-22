@@ -1,7 +1,7 @@
 import async from './axios_cofig';
 
 const baseURL = 'https://bird.ioliu.cn/v1/?url=http://api.zhuishushenqi.com';
-const chapterUrl = '';
+const chapterUrl = 'http://novel.juhe.im';
 
 export default {
     getFeaturedData() {
@@ -87,10 +87,11 @@ export default {
         });
     },
 
-    getChapterContent(id) {
-        return async(chapterUrl + '/chapter/' + id, {
-            cv: '1495097622174'
-        }).then(data => data.chapter);
+    getChapterContent(url) {
+        return async(chapterUrl + '/chapters/' + encodeURIComponent(url))
+            .then(result => {
+                return result.data.chapter.cpContent;
+            });
     },
 
     getShelfBookUpdate(ids) {

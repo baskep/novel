@@ -1,0 +1,47 @@
+#mask {
+    position: absolute;
+    top: 0;
+    z-index: 10003;
+    opacity: 0.5;
+    filter: opacity(50);
+    background-color: #000;
+}
+
+.popup-wrapper {
+    position: absolute;
+    left: 50%;
+    width: 70%;
+    height: 20%;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 20003;
+    transform: translate(-50%, -50%);
+    .dialog {
+        position: relative;
+        margin: 10px auto;
+        width: 86%;
+        height: 90%;
+    }
+    h4 {
+        font-size: 18px;
+    }
+    p {
+        font-family: '微软雅黑';
+        margin-top: 20px;
+    }
+    .operate-button {
+        position: absolute;
+        display: flex;
+        justify-content: flex-end;
+        right: 0;
+        bottom: 20px;
+        width: 100%;
+        & > span:nth-child(2) {
+            color: red;
+        }
+        span {
+            margin-right: 5%;
+            font-size: 14px;
+        }
+    }
+}

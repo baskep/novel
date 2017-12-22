@@ -1,0 +1,15 @@
+.page-loading {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 9998;
+    background-color: #fff;
+    img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -100%);
+        width: 20%;
+    }
+}

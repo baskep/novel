@@ -1,0 +1,43 @@
+.cat-bar {
+    margin-top: 60px;
+    overflow: hidden;
+    p {
+        margin: 10px auto;
+        width: 90%;
+        font-size: 15px;
+        font-family: '微软雅黑';
+        color: #000;
+    }
+    li {
+        float: left;
+        padding: 10px 0;
+        border-right: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+        width: 33%;
+        line-height: 1.6;
+        text-align: center;
+        p {
+            padding: 3px;
+            font-size: 16px;
+        }
+        span {
+            font-size: 13px;
+            color: #999;
+        }
+    }
+    li:nth-child(1),
+    li:nth-child(2),
+    li:nth-child(3) {
+        border-top: 1px solid #f0f0f0;
+    }
+    li:nth-child(3n+3) {
+        border-right: none;
+    }
+}
+
+.cat-bar:nth-child(2),
+.cat-bar:nth-child(3),
+.cat-bar:nth-child(4) {
+    margin-top: 20px;
+}
+

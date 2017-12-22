@@ -1,0 +1,24 @@
+.toobar {
+    position: fixed;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    height: 50px;
+    z-index: 9999;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    border-top: 1px solid #dadada;
+    background-color: #fff;
+    a {
+        width: 25%;
+        height: 100%;
+        text-align: center;
+    }
+}
+
+.router-link-exact-active p {
+    color: #ed424b;
+}
