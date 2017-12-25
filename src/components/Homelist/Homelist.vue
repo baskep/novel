@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import util from '../../util/util';
+
 export default {
     name: 'homelist',
     data() {
@@ -41,6 +43,9 @@ export default {
     watch: {
         bookdata: function() {
             this.books = this.bookdata;
+            this.books.map(item => {
+                item.cover = util.initImgURL(item.cover);
+            });
         }
     }
 };

@@ -25,9 +25,9 @@
                 </div>
             </router-link>
         </div>
-        <div v-show="!isLoadShow" class="recommend-end">
+        <section v-show="!isLoadShow" class="recommend-end">
             <p>没有更多了</p>
-        </div>
+        </section>
         <Load v-show="isLoadShow" style="width: 100%; margin: 20px 0px 0px;"></Load>
     </section>
 </template>
