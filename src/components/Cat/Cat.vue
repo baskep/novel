@@ -1,6 +1,6 @@
 <template>
     <section class="Cat">
-        <Headerbar :headtitle="headtitle"></Headerbar>
+        <Headerbar :headTitle="headTitle"></Headerbar>
         <Catbar></Catbar>
         <Toobar :index="2"></Toobar>
     </section>
@@ -15,7 +15,7 @@ export default {
     name: 'cat',
     data() {
         return {
-            headtitle: '分类'
+            headTitle: '分类'
         };
     },
     components: {

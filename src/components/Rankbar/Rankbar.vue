@@ -24,13 +24,12 @@
                 </div>
             </router-link>
         </div>
-        <div class="rank-end">
-            <p>没有更多了</p>
-        </div>
     </div>
 </template>
 
 <script>
+import util from '../../util/util';
+
 export default {
     name: 'rankbar',
     data() {
@@ -39,20 +38,15 @@ export default {
         };
     },
     props: {
-        ranBooks: Array
+        bookdata: Array
     },
     watch: {
-        ranBooks: function() {
-            this.books = this.ranBooks;
+        bookdata: function() {
+            this.books = this.bookdata;
             this.books.map(item => {
-                item.cover = this.initImgSrc(item.cover);
+                item.cover = util.initImgURL(item.cover);
                 item.latelyFollower = (item.latelyFollower / 10000).toFixed(2);
             });
-        }
-    },
-    methods: {
-        initImgSrc(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
         }
     }
 };

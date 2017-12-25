@@ -21,6 +21,7 @@ import Load from '../Load/Load';
 import Homelist from '../Homelist/Homelist';
 
 import api from '../../api/api';
+import util from '../../util/util';
 
 export default {
     name: 'categorydetail',
@@ -28,22 +29,12 @@ export default {
         return {
             backbarTitle: '',
             currentCat: 'hot',
-            catList: [{
-                type: 'hot',
-                name: '热门'
-                }, {
-                type: 'new',
-                name: '新书'
-                }, {
-                type: 'reputation',
-                name: '好评'
-                }, {
-                type: 'over',
-                name: '完结'
-                }, {
-                type: 'monthly',
-                name: '包月'
-            }],
+            catList: [{type: 'hot', name: '热门'},
+                      {type: 'new', name: '新书'},
+                      {type: 'reputation', name: '好评'},
+                      {type: 'over', name: '完结'},
+                      {type: 'monthly', name: '包月'}
+                    ],
             transformName: {
                 '男': 'male',
                 '女': 'female',
@@ -56,11 +47,11 @@ export default {
             major: '全部',
             minor: '',
             bookdata: [],
-            isLoadShow: true,
             docEle: null,
             bodyEle: null,
             bookEle: null,
-            $clientHeight: 0
+            $clientHeight: 0,
+            isLoadShow: true
         };
     },
     created() {
@@ -72,7 +63,7 @@ export default {
         this.bodyEle = document.body;
         this.$clientHeight = this.bodyEle.clientHeight;
         this.bookEle = this.$refs.catList;
-        window.addEventListener('scroll', this.debounce(this.loadMore, 500, 1000));
+        window.addEventListener('scroll', util.debounce(this.loadMore, 500, 1000));
     },
     methods: {
         getCatBooks: function() {
@@ -80,7 +71,7 @@ export default {
             api.getCatBooks(this.sex, this.currentCat, this.backbarTitle, this.minor, this.start * this.limit)
                 .then(data => {
                     data.map(item => {
-                        item.cover = this.initImgSrc(item.cover);
+                        item.cover = util.initImgURL(item.cover);
                         this.bookdata.push(item);
                     });
                     this.isLoadShow = false;
@@ -100,27 +91,6 @@ export default {
                 this.start++;
                 this.getCatBooks();
             }
-        },
-        debounce: function(func, wait, mustRun) {
-            let timeout = null;
-            let startTime = new Date();
-            return function() {
-                let context = this;
-                let args = arguments;
-                let curTime = new Date();
-                clearTimeout(timeout);
-                // 如果达到了规定的触发时间间隔，触发 handler
-                if (curTime - startTime >= mustRun) {
-                    func.apply(context, args);
-                    startTime = curTime;
-                // 没达到触发间隔，重新设定定时器
-                } else {
-                    timeout = setTimeout(func, wait);
-                }
-            };
-        },
-        initImgSrc(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
         }
     },
     components: {

@@ -25,24 +25,26 @@
                 </div>
             </router-link>
         </div>
-        <div class="recommend-end">
+        <div v-show="!isLoadShow" class="recommend-end">
             <p>没有更多了</p>
         </div>
+        <Load v-show="isLoadShow" style="width: 100%; margin: 20px 0px 0px;"></Load>
     </section>
 </template>
 
 <script>
 import Backbar from '../Backbar/Backbar';
-
+import Load from '../Load/Load';
 import api from '../../api/api';
+import util from '../../util/util';
 
 export default {
     name: 'recommend',
     data() {
         return {
-            books: [],
             backbarTitle: '',
-            bookInfo: Object
+            books: [],
+            isLoadShow: true
         };
     },
     created() {
@@ -59,7 +61,10 @@ export default {
                 .then(data => {
                     this.books = data;
                     this.books.map((item) => {
-                        item.cover = this.initImgSrc(item.cover);
+                        item.cover = util.initImgURL(item.cover);
+                    });
+                    this.$nextTick(function() {
+                        this.isLoadShow = false;
                     });
                 });
         },
@@ -69,14 +74,15 @@ export default {
                     data.map(item => {
                         this.books.push(item.book);
                     });
+                    this.$nextTick(function() {
+                        this.isLoadShow = false;
+                    });
                 });
-        },
-        initImgSrc(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
         }
     },
     components: {
-        'Backbar': Backbar
+        'Backbar': Backbar,
+        'Load': Load
     }
 };
 </script>

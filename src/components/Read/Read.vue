@@ -69,28 +69,11 @@ export default {
     data() {
         return {
             currentSkin: 0,
-            skins: [
-                {
-                    id: 0,
-                    className: 'skin-brown'
-                },
-                {
-                    id: 1,
-                    className: 'skin-light-blue'
-                },
-                {
-                    id: 2,
-                    className: 'skin-light-green'
-                },
-                {
-                    id: 3,
-                    className: 'skin-light-red'
-                },
-                {
-                    id: 4,
-                    className: 'skin-light-black'
-                }
-            ],
+            skins: [{id: 0, className: 'skin-brown'},
+                    {id: 1, className: 'skin-light-blue'},
+                    {id: 2, className: 'skin-light-green'},
+                    {id: 3, className: 'skin-light-red'},
+                    {id: 4, className: 'skin-light-black'}],
             chapter: {},
             chapters: [],
             contentlist: [],

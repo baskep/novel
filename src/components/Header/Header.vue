@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h2 class="title">{{headtitle}}</h2>
+        <h2 class="title">{{headTitle}}</h2>
         <nav class="nav-group" v-if="show">
             <h3 :class="['nav-item', { active: sex === 'boy' }]" @click="toggele('boy')">男生</h3>
             <h3 :class="['nav-item', { active: sex === 'girl' }]" @click="toggele('girl')">女生</h3>
@@ -17,7 +17,7 @@
 export default {
     name: 'headbar',
     props: {
-        headtitle: {
+        headTitle: {
             type: String,
             default: '我的书架'
         },

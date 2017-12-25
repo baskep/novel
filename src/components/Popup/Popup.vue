@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import util from '../../util/util';
+
 export default {
     name: 'dialog',
     data() {
@@ -39,7 +41,7 @@ export default {
         this.$mask = this.$refs.mask;
         this.$popupWrapper = this.$refs.popupWrapper;
         this.init();
-        window.addEventListener('scroll', this.debounce(this.init, 0, 0));
+        window.addEventListener('scroll', util.debounce(this.init, 0, 0));
     },
     methods: {
         init: function() {
@@ -48,22 +50,6 @@ export default {
             this.$mask.style.height = $clientHeight + 'px';
             this.$mask.style.width = $clientWidth + 'px';
             this.$popupWrapper.style.top = this.$body.clientHeight * 0.5 + 'px';
-        },
-        debounce: function(func, wait, mustRun) {
-            let timeout = null;
-            let startTime = new Date();
-            return function() {
-                let context = this;
-                let args = arguments;
-                let curTime = new Date();
-                clearTimeout(timeout);
-                if (curTime - startTime >= mustRun) {
-                    func.apply(context, args);
-                    startTime = curTime;
-                } else {
-                    timeout = setTimeout(func, wait);
-                }
-            };
         },
         determine: function() {
             this.$emit(this.options.determine);

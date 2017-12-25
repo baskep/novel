@@ -44,7 +44,7 @@ export default {
     },
     created() {
         this.getSearchHotKeywords();
-        let localStorageData = JSON.parse(window.localStorage.getItem('测试'));
+        let localStorageData = JSON.parse(window.localStorage.getItem('searchHistory'));
         if (localStorageData !== null) {
             this.historyKeyWords = localStorageData;
         } else {
@@ -73,13 +73,13 @@ export default {
             this.keyword = item;
             if (this.historyKeyWords.indexOf(item) === -1) {
                 this.historyKeyWords.push(item);
-                window.localStorage.setItem('测试', JSON.stringify(this.historyKeyWords));
+                window.localStorage.setItem('searchHistory', JSON.stringify(this.historyKeyWords));
             }
             this.search(this.keyword);
         },
         clearHistory: function() {
             this.historyKeyWords = [];
-            window.localStorage.removeItem('测试');
+            window.localStorage.removeItem('searchHistory');
         }
     }
 };

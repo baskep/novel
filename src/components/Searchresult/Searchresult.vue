@@ -13,6 +13,7 @@ import Backbar from '../Backbar/Backbar';
 import Homelist from '../Homelist/Homelist';
 
 import api from '../../api/api';
+import util from '../../util/util';
 
 export default {
     name: 'searchreuslt',
@@ -31,14 +32,11 @@ export default {
                 .then(data => {
                     this.books = data;
                     this.books.map(item => {
-                        item.cover = this.initImgSrc(item.cover);
+                        item.cover = util.initImgURLutil(item.cover);
                         item.majorCate = item.cat;
                         item.latelyFollower = (item.latelyFollower / 10000).toFixed(2) + '万';
                     });
             });
-        },
-        initImgSrc(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
         }
     },
     components: {

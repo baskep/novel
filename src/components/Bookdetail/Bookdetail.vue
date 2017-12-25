@@ -4,13 +4,13 @@
         <div class="book-wrapper">
             <div class="book-meta">
                 <div class="book-meta-img">
-                    <img :src="bookdata.imgSrc" alt="">
+                    <img :src="book.imgSrc" alt="">
                 </div>
                 <div class="book-meta-info">
-                    <h4>{{bookdata.title}}</h4>
-                    <p class="book-meta-author">{{bookdata.author}}</p>
-                    <p>{{bookdata.majorCate}}/{{bookdata.minorCate}}</p>
-                    <p><span>{{this.bookdata.wordCount}}万字</span> | <span>{{bookdata._gg ? '已完结' : '连载中'}}</span></p>
+                    <h4>{{book.title}}</h4>
+                    <p class="book-meta-author">{{book.author}}</p>
+                    <p>{{book.majorCate}}/{{book.minorCate}}</p>
+                    <p><span>{{this.book.wordCount}}万字</span> | <span>{{book._gg ? '已完结' : '连载中'}}</span></p>
                 </div>
             </div>
             <hr>
@@ -18,20 +18,20 @@
         <div class="book-read-info">
             <div class="reader-popularity">
                 <h5>追人气</h5>
-                <p>{{bookdata.serializeWordCount}}</p>
+                <p>{{book.serializeWordCount}}</p>
             </div>
             <div class="reader-rest">
                 <h5>读者留存率</h5>
-                <p>{{bookdata.retentionRatio}}%</p>
+                <p>{{book.retentionRatio}}%</p>
             </div>
             <div class="book-update">
                 <h5>日更新字数/天</h5>
-                <p>{{bookdata.serializeWordCount}}</p>
+                <p>{{book.serializeWordCount}}</p>
             </div>
         </div>
         <div class="all-introduction">
             <p>
-                {{bookdata.longIntro}}
+                {{book.longIntro}}
             </p>
         </div>
         <div class="book-detail-catalog">
@@ -39,9 +39,9 @@
                 <span>目录</span>
             </div>
             <div class="current-catalog">
-                <router-link :to="{ path: '/chapter', query: {id: this.id, title: bookdata.title} }">
+                <router-link :to="{ path: '/chapter', query: {id: this.id, title: book.title} }">
                     <div class="current-detail-catalog">
-                        <span>{{bookdata.updated}} · {{bookdata.lastChapter}}</span>
+                        <span>{{book.updated}} · {{book.lastChapter}}</span>
                     </div>
                     <div class="turn-to-article">
                         <img src="../../assets/icon/font.png" alt="">
@@ -99,7 +99,7 @@
            
             </div>
         </div>
-        <Bookbar :bookdata="bookdata" @read="read"></Bookbar>
+        <Bookbar :book="book" @read="read"></Bookbar>
     </section>
 </template>
 
@@ -108,6 +108,7 @@ import Backbar from '../Backbar/Backbar';
 import Bookbar from '../Bookbar/Bookbar';
 
 import api from '../../api/api';
+import util from '../../util/util';
 
 export default {
     name: 'bookdetail',
@@ -115,16 +116,11 @@ export default {
         return {
             id: '',
             backbarTitle: '书籍详情',
-            bookdata: {},
+            book: {},
             recommends: [],
             comments: [],
             isPageLoadingShow: true
         };
-    },
-    props: {
-        book: {
-            type: Object
-        }
     },
     created() {
         this.id = this.$route.query.id;
@@ -134,37 +130,29 @@ export default {
         getBookInfo: function () {
             api.getBook(this.id)
                 .then(data => {
-                    this.bookdata = data;
-                    this.bookdata.imgSrc = this.initImgSrc(this.bookdata.cover);
-                    this.bookdata.wordCount = Math.floor(parseInt(this.bookdata.wordCount) / 10000);
-                    let updated = new Date(this.bookdata.updated);
-                    this.bookdata.updated = this.initDate(updated);
+                    this.book = data;
+                    this.book.imgSrc = util.initImgURL(this.book.cover);
+                    this.book.updated = util.initDate(this.book.updated);
+                    this.book.wordCount = Math.floor(parseInt(this.book.wordCount) / 10000);
                 });
             api.getReview(this.id)
                 .then(data => {
                     this.recommends = data;
                     this.recommends.map((item) => {
-                        let updated = new Date(item.updated);
-                        item.updated = this.initDate(updated);
-                        item.author.avatar = this.initImgSrc(item.author.avatar);
+                        item.author.avatar = util.initImgURL(item.author.avatar);
+                        item.updated = util.initDate(item.updated);
                     });
                 });
             api.getRecommend(this.id)
                 .then((data) => {
                     this.comments = data.slice(0, 4);
                     this.comments.map((item) => {
-                        item.cover = this.initImgSrc(item.cover);
+                        item.cover = util.initImgURL(item.cover);
                     });
                 });
         },
-        initImgSrc(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
-        },
-        initDate(dateTime) {
-            return dateTime.getUTCFullYear() + '-' + (dateTime.getMonth() + 1) + '-' + dateTime.getDate();
-        },
         read: function() {
-            this.$router.push({path: 'chapter', query: {id: this.id, title: this.bookdata.title}});
+            this.$router.push({path: 'chapter', query: {id: this.id, title: this.book.title}});
         }
     },
     components: {

@@ -1,6 +1,6 @@
 <template>
     <section class="bookshelf">
-        <Headerbar :headtitle="headtitle"></Headerbar>
+        <Headerbar :headTitle="headTitle"></Headerbar>
         <section class="empty" v-if="isEmptyShow">
             <router-link to="/featured">
                 <div class="empty-icon">
@@ -43,14 +43,13 @@ import PageLoading from '../PageLoading/PageLoading';
 import Popup from '../Popup/Popup';
 
 import api from '../../api/api';
+import util from '../../util/util';
 
 export default {
     name: 'bookshelf',
     data() {
         return {
-            headtitle: '我的书架',
-            isEmptyShow: true,
-            isPageLoadingShow: true,
+            headTitle: '我的书架',
             id: '',
             bookID: [],
             bookShelf: [],
@@ -59,7 +58,9 @@ export default {
                 isPopupShow: false,
                 determine: 'deleteBookShelf',
                 cancel: 'hidePopup'
-            }
+            },
+            isPageLoadingShow: true,
+            isEmptyShow: true
         };
     },
     created() {
@@ -79,8 +80,8 @@ export default {
             params.map(item => {
                 api.getBook(item)
                     .then(data => {
-                        data.cover = this.initImgSrc(data.cover);
-                        data.updated = this.timeago(data.updated);
+                        data.cover = util.initImgURL(data.cover);
+                        data.updated = util.timeAgo(data.updated);
                         this.bookShelf.push(data);
                         this.bookID.push(data._id);
                     });
@@ -104,42 +105,6 @@ export default {
         },
         hidePopup: function() {
             this.options.isPopupShow = false;
-        },
-        initImgSrc: function(url) {
-            return 'http://statics.zhuishushenqi.com' + url;
-        },
-        timeago: function(dateTimeStamp) {
-            dateTimeStamp = new Date(dateTimeStamp).getTime();
-            let result;
-            let hour = 1000 * 60 * 60;
-            let day = hour * 24;
-            let week = day * 7;
-            let month = day * 30;
-            let year = month * 12;
-            let now = new Date().getTime();
-            let diffValue = now - dateTimeStamp;
-            if (diffValue < 0) {
-                return;
-            }
-            let hourC = diffValue / hour;
-            let dayC = diffValue / day;
-            let weekC = diffValue / week;
-            let monthC = diffValue / month;
-            let yearC = diffValue / year;
-            if (yearC >= 1) {
-                result = ' ' + parseInt(yearC) + '年前';
-            } else if (monthC >= 1 && month <= 12) {
-                result = ' ' + parseInt(monthC) + '月前';
-            } else if (weekC >= 1 && weekC <= 5) {
-                result = ' ' + parseInt(weekC) + '周前';
-            } else if (dayC >= 1) {
-                result = ' ' + parseInt(dayC) + '天前';
-            } else if (hourC >= 1) {
-                result = ' ' + parseInt(hourC) + '小时前';
-            } else {
-                result = '刚刚';
-            }
-            return result;
         }
     },
     components: {

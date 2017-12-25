@@ -30,6 +30,12 @@ export default {
         return {
             bookCategories: [],
             loadModules: [],
+            transformName: {
+                'male': '男',
+                'female': '女',
+                'picture': '类型',
+                'press': '出版'
+            },
             isPageLoadingShow: true,
             isPageShow: false
         };
@@ -41,15 +47,9 @@ export default {
         getCategory: function() {
             api.getCategory()
                 .then(data => {
-                    const transformName = {
-                        'male': '男',
-                        'female': '女',
-                        'picture': '类型',
-                        'press': '出版'
-                    };
                     for (let item in data) {
                         let obj = {};
-                        obj.type = transformName[item];
+                        obj.type = this.transformName[item];
                         obj.categories = data[item];
                         this.bookCategories.push(obj);
                     }

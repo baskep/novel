@@ -9,40 +9,40 @@
 				书架
 				</p>
      		 </div>
-    </router-link>
+    	</router-link>
 
-    <router-link to="/featured">
-		<div>
-			<div class="item-icon">
-				<img :src="index  === 1 ? choiceActive: choice">
+		<router-link to="/featured">
+			<div>
+				<div class="item-icon">
+					<img :src="index  === 1 ? choiceActive: choice">
+				</div>
+				<p class="item-label">
+					精选
+				</p>
 			</div>
-			<p class="item-label">
-				精选
-			</p>
-		</div>
-    </router-link>
+		</router-link>
 
-    <router-link to="/classfication">
-		<div>
-			<div class="item-icon">
-				<img :src="index  === 2 ? classficationActive: classfication">
+		<router-link to="/classfication">
+			<div>
+				<div class="item-icon">
+					<img :src="index  === 2 ? classficationActive: classfication">
+				</div>
+				<p class="item-label">
+					分类
+				</p>
 			</div>
-			<p class="item-label">
-				分类
-			</p>
-		</div>
-    </router-link>
+		</router-link>
 
-    <router-link to="rank">
-		<div>
-			<div class="item-icon">
-				<img :src="index  === 3 ? rankingActive: ranking">
+		<router-link to="/rank">
+			<div>
+				<div class="item-icon">
+					<img :src="index  === 3 ? rankingActive: ranking">
+				</div>
+				<p class="item-label">
+					排行
+				</p>
 			</div>
-			<p class="item-label">
-				排行
-			</p>
-		</div>
-    </router-link>
+		</router-link>
   </section>
 
 </template>

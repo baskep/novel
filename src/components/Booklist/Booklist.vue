@@ -38,21 +38,21 @@ export default {
         };
     },
     props: {
-        bookInfo: Object
+        book: Object
     },
     created() {
         this.getBooks();
     },
     methods: {
         getBooks: function() {
-            api.getBooks(this.bookInfo.id)
+            api.getBooks(this.book.id)
                 .then(data => {
                     data = Array.from(data);
                     data.map(item => {
                         this.books.push(item.book);
                     });
                     this.$nextTick(function () {
-                        this.$emit('load-result', this.bookInfo.id);
+                        this.$emit('load-result', this.book.id);
                     });
             });
         }

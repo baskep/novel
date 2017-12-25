@@ -1,6 +1,6 @@
 <template>
     <section class="rank">
-        <Headerbar :headtitle="headtitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
+        <Headerbar :headTitle="headTitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
         <div class="rank-bar">
             <ul>
                 <li v-for="rankCategory in rankCategories" :key="rankCategory._id" 
@@ -12,7 +12,7 @@
             </ul>
         </div>
         <load v-show="isLoadShow"></load>
-        <Rankbar :ranBooks="rankBooks" v-show="isRankBarShow"></Rankbar>
+        <Rankbar :bookdata="bookdata" v-show="isRankBarShow"></Rankbar>
         <Toobar :index="3"></Toobar>
         <PageLoading v-show="isPageLoadingShow"></PageLoading>
     </section>
@@ -31,19 +31,18 @@ export default {
     name: 'rank',
     data() {
         return {
-            headtitle: '精选',
+            headTitle: '排行榜',
             show: true,
             sex: 'boy',
             rankCategoryID: '',
             rankCategories: [],
-            rankBooks: [],
+            bookdata: [],
             isPageLoadingShow: true,
             isLoadShow: false,
             isRankBarShow: false
         };
     },
     created() {
-        this.headtitle = '排行榜';
         this.getRanks();
     },
     watch: {
@@ -52,7 +51,7 @@ export default {
             this.isRankBarShow = false;
             api.getRankBooks(this.rankCategoryID)
                 .then(data => {
-                    this.rankBooks = data.ranking.books;
+                    this.bookdata = data.ranking.books;
                     this.isLoadShow = false;
                     this.isRankBarShow = true;
                 });

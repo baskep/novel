@@ -1,6 +1,6 @@
 <template>
     <div class="featured">
-        <Headerbar :headtitle="headtitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
+        <Headerbar :headTitle="headTitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
         <div class="featured-books" v-show="isPageShow">
             <section class="swiper-banner">
                 <swiper :options="swiperOption">
@@ -17,7 +17,7 @@
                         更多 >>
                     </router-link>
                 </div>
-                <Booklist :bookInfo="{ id: module._id }" :bookdata="bookdata" @load-result="loadResult"></Booklist>
+                <Booklist :book="{ id: module._id }" @load-result="loadResult"></Booklist>
             </section>
         </div>
         <Toobar :index="1"></Toobar>
@@ -42,24 +42,24 @@ export default {
     name: 'featured',
     data() {
         return {
-            headtitle: '精选',
+            headTitle: '精选',
             show: true,
             sex: 'boy',
             bookdata: [],
-            isPageLoadingShow: true,
-            isPageShow: false,
             loadModules: [],
             modules: [],
             swiperSlides: [],
             swiperOption: {
-            pagination: '.swiper-pagination',
-            notNextTick: true,
-            initialSlide: 0,
-            autoplay: 5000,
-            grabCursor: true,
-            setWrapperSize: true,
-            paginationClickable: true
-            }
+                pagination: '.swiper-pagination',
+                notNextTick: true,
+                initialSlide: 0,
+                autoplay: 5000,
+                grabCursor: true,
+                setWrapperSize: true,
+                paginationClickable: true
+            },
+            isPageLoadingShow: true,
+            isPageShow: false
         };
     },
     watch: {
