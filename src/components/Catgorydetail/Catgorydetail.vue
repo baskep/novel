@@ -71,7 +71,7 @@ export default {
             api.getCatBooks(this.sex, this.currentCat, this.backbarTitle, this.minor, this.start * this.limit)
                 .then(data => {
                     data.map(item => {
-                        item.cover = util.initImgURL(item.cover);
+                        item.cat = item.majorCate;
                         this.bookdata.push(item);
                     });
                     this.isLoadShow = false;

@@ -16,7 +16,7 @@
                             <p>{{item.author}}</p>
                         </div>
                         <div class="book-tag">
-                            <span class="book-type">{{item.majorCate}}</span>
+                            <span class="book-type">{{item.cat}}</span>
                             <span class="book-state">{{`${item.isSerial ? '连载中' : '已完结'}`}}</span>
                             <span class="book-popularity">{{item.latelyFollower}}人气</span>
                         </div>

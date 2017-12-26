@@ -15,7 +15,6 @@ import Homelist from '../Homelist/Homelist';
 import Load from '../Load/Load';
 
 import api from '../../api/api';
-import util from '../../util/util';
 
 export default {
     name: 'searchreuslt',
@@ -35,7 +34,6 @@ export default {
                 .then(data => {
                     this.books = data;
                     this.books.map(item => {
-                        item.cover = util.initImgURLutil(item.cover);
                         item.majorCate = item.cat;
                         item.latelyFollower = (item.latelyFollower / 10000).toFixed(2) + '万';
                     });
