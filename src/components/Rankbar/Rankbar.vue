@@ -1,7 +1,7 @@
 <template>
-    <div class="rank-content">
+    <section class="rank-content">
         <div class="rank-content-book" v-for="book in books" :key="book._id">
-            <router-link :to="{ path: 'bookdetail', query: {id: book._id} }">
+            <router-link :to="{ path: 'bookdetail', query: { id: book._id } }">
                 <div class="rank-book-img">
                     <img :src="book.cover" alt="">
                 </div>
@@ -17,14 +17,14 @@
                         </p>
                     </div>
                     <div class="rank-book-popularity">
-                        <span class="rank-book-rest">{{book.retentionRatio}}%留存</span>
+                        <span class="rank-book-rest red">{{book.retentionRatio}}%留存</span>
                         <span>|</span>
-                        <span class="rank-book-like">{{book.latelyFollower}}万人气</span>
+                        <span class="rank-book-like blue">{{book.latelyFollower}}万人气</span>
                     </div>
                 </div>
             </router-link>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -41,7 +41,7 @@ export default {
         bookdata: Array
     },
     watch: {
-        bookdata: function() {
+        bookdata() {
             this.books = this.bookdata;
             this.books.map(item => {
                 item.cover = util.initImgURL(item.cover);

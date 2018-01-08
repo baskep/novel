@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <div>
+    <section>
+        <section>
             <div class="cat-bar" v-for="item in bookCategories" :key="item.type">
-                <p>{{item.type}}</p>
+                <p class="black">{{item.type}}</p>
                 <ul>
                     <li v-for="category in item.categories" :Key="category.name">
-                        <router-link :to="{ path: '/categorydetail', query: {gender: item.type, name: category.name}}">
+                        <router-link :to="{ path: '/categorydetail', query: { gender: item.type, name: category.name }}">
                             <p>{{category.name}}</p>
-                            <span>
+                            <span class="deep-grap">
                                 {{category.bookCount}}本
                             </span>
                         </router-link>
                     </li>
                 </ul>
             </div>
-        </div>
+        </section>
         <PageLoading v-show="isPageLoadingShow"></PageLoading>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -44,7 +44,7 @@ export default {
         this.getCategory();
     },
     methods: {
-        getCategory: function() {
+        getCategory() {
             api.getCategory()
                 .then(data => {
                     for (let item in data) {

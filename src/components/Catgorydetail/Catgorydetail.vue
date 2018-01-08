@@ -1,6 +1,6 @@
 <template>
     <section class="category-detail" ref="catList">
-        <Backbar :backbarTitle="backbarTitle"></Backbar>
+        <Backbar></Backbar>
         <section class="cat-list">
             <ul>
                 <li :class="['cat-item', {'cat-active': cat.type === currentCat}]" v-for="cat in catList" :key="cat.type" 
@@ -23,11 +23,13 @@ import Homelist from '../Homelist/Homelist';
 import api from '../../api/api';
 import util from '../../util/util';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'categorydetail',
     data() {
         return {
-            backbarTitle: '',
+            bookName: '',
             currentCat: 'hot',
             catList: [{type: 'hot', name: '热门'},
                       {type: 'new', name: '新书'},
@@ -55,7 +57,8 @@ export default {
         };
     },
     created() {
-        this.backbarTitle = this.$route.query.name;
+        this.bookName = this.$route.query.name;
+        this.SET_HEADTITLE(this.bookName);
         this.getCatBooks();
     },
     mounted() {
@@ -66,24 +69,28 @@ export default {
         window.addEventListener('scroll', util.debounce(this.loadMore, 500, 1000));
     },
     methods: {
-        getCatBooks: function() {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        getCatBooks() {
             this.sex = this.transformName[this.$route.query.gender];
-            api.getCatBooks(this.sex, this.currentCat, this.backbarTitle, this.minor, this.start * this.limit)
+            api.getCatBooks(this.sex, this.currentCat, this.bookName, this.minor, this.start * this.limit)
                 .then(data => {
                     data.map(item => {
+                        item.cover = util.initImgURL(item.cover);
                         item.cat = item.majorCate;
                         this.bookdata.push(item);
                     });
                     this.isLoadShow = false;
                 });
         },
-        changeCat: function(cat) {
+        changeCat(cat) {
             this.bookdata = [];
             this.currentCat = cat;
             this.isLoadShow = true;
             this.getCatBooks();
         },
-        loadMore: function() {
+        loadMore() {
             let scrollTop = this.docEle.scrollTop + this.bodyEle.scrollTop;
             let offsetHeight = this.bookEle.offsetHeight;
             if (offsetHeight - this.$clientHeight - scrollTop < 160) {

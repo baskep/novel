@@ -1,9 +1,9 @@
 <template>
-    <header>
-        <h2 class="title">{{headTitle}}</h2>
+    <header class="white">
+        <h2 class="title white">{{headTitle}}</h2>
         <nav class="nav-group" v-if="show">
-            <h3 :class="['nav-item', { active: sex === 'boy' }]" @click="toggele('boy')">男生</h3>
-            <h3 :class="['nav-item', { active: sex === 'girl' }]" @click="toggele('girl')">女生</h3>
+            <h3 :class="['nav-item', 'white', { active: sex === 'boy' }]" @click="toggele('boy')">男生</h3>
+            <h3 :class="['nav-item', 'white', { active: sex === 'girl' }]" @click="toggele('girl')">女生</h3>
         </nav>
         <div class="search">
             <router-link to="/search">
@@ -14,13 +14,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
     name: 'headbar',
     props: {
-        headTitle: {
-            type: String,
-            default: '我的书架'
-        },
         show: {
             type: Boolean,
             default: false
@@ -30,8 +28,13 @@ export default {
             default: 'boy'
         }
     },
+    computed: {
+        ...mapState([
+            'headTitle'
+        ])
+    },
     methods: {
-        toggele: function(sex) {
+        toggele(sex) {
             this.$emit('changeSex', sex);
         }
     }

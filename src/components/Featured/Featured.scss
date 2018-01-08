@@ -6,6 +6,9 @@
         height: 80%;
         width: 100%;
     }
+    .book-info {
+        margin-top: 20px;
+    }
     .book-head {
         margin: 10px 0;
         display: flex;
@@ -18,7 +21,6 @@
         }
         .book-more {
             margin-right: 10px;
-            color: #ed424b;
         }
     }
 }

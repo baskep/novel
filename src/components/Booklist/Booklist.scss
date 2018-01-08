@@ -8,10 +8,6 @@
     }
     .book-introduction {
         margin-right: 10px;
-        p,
-        span {
-            color: #999;
-        }
     }
     .book-img {
         margin: 0 10px;
@@ -52,11 +48,9 @@
             }
             .book-state {
                 border: 1px solid #ed424b;
-                color: #ed424b;
             }
             .book-popularity {
                 border: 1px solid #4284ed;
-                color: #4284ed;
             }
         }
     }

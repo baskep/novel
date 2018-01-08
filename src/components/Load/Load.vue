@@ -1,11 +1,11 @@
 <template>
-    <div class="load-tip">
+    <section class="load-tip">
         <div class="ball-pulse">
             <div></div>
             <div></div>
             <div></div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>

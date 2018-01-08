@@ -5,19 +5,21 @@
                 <img src="../../assets/icon/back.png" alt="">
             </div>
             <div class="back-bar-title">
-                <h2 class="white">{{backbarTitle}}</h2>
+                <h2 class="white">{{headTitle}}</h2>
             </div>
         </div>
     </section>
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
     name: 'backbar',
-    props: {
-        backbarTitle: {
-            type: ''
-        }
+    computed: {
+        ...mapState([
+            'headTitle'
+        ])
     }
 };
 </script>

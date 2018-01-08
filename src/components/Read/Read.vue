@@ -7,7 +7,7 @@
         </div>
         <div class="read-content-area" @click="toggle" :class="[ skins[currentSkin].className ]">
             <h2><b>{{chapter.title}}</b></h2>
-            <p v-for="(content, index) in contentlist" :key="index" :style="{'font-size': fontSize + 'px'}">
+            <p v-for="(content, index) in contentlist" :key="index" :style="{'font-size': currentFontSize + 'px'}">
                 {{content}}
             </p>
         </div>
@@ -42,7 +42,7 @@
             <div class="setting-color">
                 <ul>
                     <li v-for="skin in skins" :key="skin.id" @click="changeSkin(skin.id)">
-                        <span :class="[ skin.className, {'skin-focus': currentSkin === skin.id} ]"></span>
+                        <span :class="[ skin.className, { 'skin-focus': currentSkin === skin.id } ]"></span>
                     </li>
                 </ul>
             </div>
@@ -64,6 +64,8 @@ import PageLoading from '../../components/PageLoading/PageLoading';
 
 import api from '../../api/api';
 
+import {mapState, mapMutations} from 'vuex';
+
 export default {
     name: 'read',
     data() {
@@ -73,19 +75,29 @@ export default {
                     {id: 1, className: 'skin-light-blue'},
                     {id: 2, className: 'skin-light-green'},
                     {id: 3, className: 'skin-light-red'},
-                    {id: 4, className: 'skin-light-black'}],
+                    {id: 4, className: 'skin-light-black'}
+                    ],
             chapter: {},
             chapters: [],
             contentlist: [],
-            fontSize: 16,
+            currentFontSize: 0,
+            minFontSize: 12,
+            maxFontSize: 20,
             isBoxShow: true,
             isSettingShow: false,
             isNightMode: false,
             isPageLoadingShow: true
         };
     },
+    computed: {
+        ...mapState([
+            'fontSize',
+            'skinIndex',
+            'nightMode'
+        ])
+    },
     watch: {
-        isBoxShow: function() {
+        isBoxShow() {
             let translateY = 'translateY(0)';
             if (this.isBoxShow) {
                 this.$refs.readBackBar.style.transform = translateY;
@@ -98,27 +110,35 @@ export default {
         }
     },
     created() {
+        this.currentFontSize = this.fontSize;
+        this.currentSkin = this.skinIndex;
+        this.isNightMode = this.nightMode;
         this.chapter = this.$route.query.chapter;
         this.chapters = this.$route.query.chapters;
         this.getChapterContent();
     },
     methods: {
-        toggle: function() {
+        ...mapMutations([
+            'SET_FONTSIZE',
+            'SET_SKININDEX',
+            'SET_NINGHTMODE'
+        ]),
+        toggle() {
             this.isBoxShow = !this.isBoxShow;
         },
-        getChapterContent: function() {
+        getChapterContent() {
             let url = this.chapter.link;
             if (typeof url === 'string' && url !== '') {
                 api.getChapterContent(url)
                     .then(data => {
                         this.contentlist = data.replace(/[↵]/g, '\n').split('\n');
-                        this.$nextTick(function() {
+                        this.$nextTick(() => {
                             this.isPageLoadingShow = true;
                         });
                     });
                 }
         },
-        changeMode: function() {
+        changeMode() {
             this.isNightMode = !this.isNightMode;
             if (this.isNightMode) {
                 this.currentSkin = 4;
@@ -126,10 +146,10 @@ export default {
                 this.currentSkin = 0;
             }
         },
-        setSettingState: function() {
+        setSettingState() {
             this.isSettingShow = !this.isSettingShow;
         },
-        changeSkin: function(id) {
+        changeSkin(id) {
             if (id === 4) {
                 this.changeMode();
             } else {
@@ -139,16 +159,22 @@ export default {
             }
             this.currentSkin = id;
         },
-        minusFontsize: function() {
-            if (this.fontSize > 10) {
-                this.fontSize = this.fontSize - 1;
+        minusFontsize() {
+            if (this.currentFontSize > this.minFontSize) {
+                this.currentFontSize = this.currentFontSize - 1;
             }
         },
-        plusFontsize: function() {
-            if (this.fontSize < 20) {
-                this.fontSize = this.fontSize + 1;
+        plusFontsize() {
+            if (this.currentFontSize < this.maxFontSize) {
+                this.currentFontSize = this.currentFontSize + 1;
             }
         }
+    },
+    beforeRouteLeave(to, from, next) {
+        this.SET_FONTSIZE(this.currentFontSize);
+        this.SET_SKININDEX(this.currentSkin);
+        this.SET_NINGHTMODE(this.isNightMode);
+        next();
     },
     components: {
         'PageLoading': PageLoading

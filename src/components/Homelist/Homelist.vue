@@ -8,17 +8,17 @@
                 <div class="book-introduction">
                     <h2><strong>{{item.title}}</strong></h2>
                     <div class="breif-introduction">
-                        <p>{{item.shortIntro}}</p>                
+                        <p class="deep-grap">{{item.shortIntro}}</p>                
                     </div>
                     <div class="book-bar">
                         <div class="book-author">
-                            <img src="../../assets/icon/author.png" alt="" style="width:12px; height:12px;"> 
-                            <p>{{item.author}}</p>
+                            <img src="../../assets/icon/author.png" alt=""> 
+                            <p class="deep-grap">{{item.author}}</p>
                         </div>
                         <div class="book-tag">
                             <span class="book-type">{{item.cat}}</span>
-                            <span class="book-state">{{`${item.isSerial ? '连载中' : '已完结'}`}}</span>
-                            <span class="book-popularity">{{item.latelyFollower}}人气</span>
+                            <span class="book-state red">{{`${item.isSerial ? '连载中' : '已完结'}`}}</span>
+                            <span class="book-popularity blue">{{item.latelyFollower}}人气</span>
                         </div>
                     </div>
                 </div>
@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import util from '../../util/util';
-
 export default {
     name: 'homelist',
     data() {
@@ -41,11 +39,8 @@ export default {
         bookdata: Array
     },
     watch: {
-        bookdata: function() {
+        bookdata() {
             this.books = this.bookdata;
-            this.books.map(item => {
-                item.cover = util.initImgURL(item.cover);
-            });
         }
     }
 };

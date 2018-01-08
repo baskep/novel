@@ -5,19 +5,20 @@
             <p>{{`${isCurrentBookAddShelf ? '已加入书架' : '加入书架'}`}}</p>
         </div>
          <div class="read" @click="read">
-            <p>立即阅读</p>
+            <p class="white">立即阅读</p>
         </div>
     </section>
 </template>
 
 <script>
+import util from '../../util/util';
+
 export default {
     name: 'bookbar',
     data() {
         return {
             id: '',
             bookID: [],
-            backbarTitle: '',
             isCurrentBookAddShelf: false
         };
     },
@@ -25,11 +26,11 @@ export default {
         book: Object
     },
     watch: {
-        book: function() {
+        book() {
             this.id = this.book._id;
-            let localStorageData = window.localStorage.getItem('bookshelf');
-            if (localStorageData !== null && localStorageData !== 'null') {
-                this.bookID = JSON.parse(localStorageData);
+            let localStorageData = util.getStore('BOOKSHELF');
+            if (localStorageData) {
+                this.bookID = localStorageData;
             } else {
                 this.bookID = [];
             }
@@ -39,14 +40,14 @@ export default {
         }
     },
     methods: {
-        addCurrentBookToShelf: function () {
+        addCurrentBookToShelf() {
             if (!this.isCurrentBookAddShelf) {
                 this.bookID.push(this.book._id);
                 this.isCurrentBookAddShelf = true;
-                window.localStorage.setItem('bookshelf', JSON.stringify(this.bookID));
+                util.setStore('BOOKSHELF', this.bookID);
             }
         },
-        read: function() {
+        read() {
             this.$emit('read');
         }
     }

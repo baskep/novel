@@ -1,14 +1,14 @@
-const baseURL = 'http://statics.zhuishushenqi.com';
+const imgBaseURL = 'http://statics.zhuishushenqi.com';
 
 export default {
-    initImgURL(url) {
-        return baseURL + url;
+    initImgURL: (url) => {
+        return imgBaseURL + url;
     },
-    initDate(time) {
+    initDate: (time) => {
         let dateTime = new Date(time);
         return dateTime.getUTCFullYear() + '-' + (dateTime.getMonth() + 1) + '-' + dateTime.getDate();
     },
-    timeAgo: function (dateTimeStamp) {
+    timeAgo: (dateTimeStamp) => {
         dateTimeStamp = new Date(dateTimeStamp).getTime();
         let result;
         let hour = 1000 * 60 * 60;
@@ -41,7 +41,7 @@ export default {
         }
         return result;
     },
-    debounce: function (func, wait, mustRun) {
+    debounce: (func, wait, mustRun) => {
         let timeout = null;
         let startTime = new Date();
         return function () {
@@ -56,5 +56,28 @@ export default {
                 timeout = setTimeout(func, wait); // 没达到触发间隔，重新设定定时器
             }
         };
+    },
+    setStore: (name, content) => {
+        if (!name) {
+            return;
+        }
+        if (typeof content !== 'string') {
+            content = JSON.stringify(content);
+        }
+        window.localStorage.setItem(name, content);
+    },
+    getStore: name => {
+        let obj = JSON.parse(window.localStorage.getItem(name));
+        if (obj !== null && obj !== 'null' && obj !== '') {
+            return obj;
+        } else {
+            return null;
+        }
+    },
+    removeStore: name => {
+        if (!name) {
+            return;
+        }
+        window.localStorage.removeItem(name);
     }
 };

@@ -1,7 +1,7 @@
 <template>
     <section class="rank">
-        <Headerbar :headTitle="headTitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
-        <div class="rank-bar">
+        <Headerbar :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
+        <section class="rank-bar">
             <ul>
                 <li v-for="rankCategory in rankCategories" :key="rankCategory._id" 
                 :class="{'rank-active': rankCategory._id === rankCategoryID}"
@@ -10,7 +10,7 @@
                     <span>{{rankCategory.shortTitle}}</span>
                 </li>
             </ul>
-        </div>
+        </section>
         <load v-show="isLoadShow"></load>
         <Rankbar :bookdata="bookdata" v-show="isRankBarShow"></Rankbar>
         <Toobar :index="3"></Toobar>
@@ -27,11 +27,12 @@ import Load from '../Load/Load';
 
 import api from '../../api/api';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'rank',
     data() {
         return {
-            headTitle: '排行榜',
             show: true,
             sex: 'boy',
             rankCategoryID: '',
@@ -43,10 +44,11 @@ export default {
         };
     },
     created() {
+        this.SET_HEADTITLE('排行榜');
         this.getRanks();
     },
     watch: {
-        rankCategoryID: function () {
+        rankCategoryID() {
             this.isLoadShow = true;
             this.isRankBarShow = false;
             api.getRankBooks(this.rankCategoryID)
@@ -58,22 +60,25 @@ export default {
         }
     },
     methods: {
-        getRanks: function () {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        getRanks() {
             api.getRanks()
                 .then(data => {
                     this.rankCategories = this.sex === 'boy' ? data.male : data.female;
                     this.rankCategoryID = this.rankCategories[0]._id;
-                    this.$nextTick(function() {
+                    this.$nextTick(() => {
                         this.isPageLoadingShow = false;
                         this.isRankBarShow = true;
                     });
                 });
         },
-        changeSex: function (sex) {
+        changeSex(sex) {
             this.sex = sex;
             this.getRanks();
         },
-        changeCategory: function(id) {
+        changeCategory(id) {
             this.rankCategoryID = id;
         }
     },

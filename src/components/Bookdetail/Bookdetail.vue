@@ -1,6 +1,6 @@
 <template>
     <section class="book-detail" ref="bookDetail">
-        <Backbar :backbarTitle="backbarTitle"></Backbar>
+        <Backbar></Backbar>
         <div class="book-wrapper">
             <div class="book-meta">
                 <div class="book-meta-img">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="book-meta-info">
                     <h4>{{book.title}}</h4>
-                    <p class="book-meta-author">{{book.author}}</p>
+                    <p class="book-meta-author red">{{book.author}}</p>
                     <p>{{book.majorCate}}/{{book.minorCate}}</p>
                     <p><span>{{this.book.wordCount}}万字</span> | <span>{{book._gg ? '已完结' : '连载中'}}</span></p>
                 </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="book-read-info">
             <div class="reader-popularity">
-                <h5>追人气</h5>
+                <h5 class="deep-grap">追人气</h5>
                 <p>{{book.serializeWordCount}}</p>
             </div>
             <div class="reader-rest">
@@ -39,9 +39,9 @@
                 <span>目录</span>
             </div>
             <div class="current-catalog">
-                <router-link :to="{ path: '/chapter', query: {id: this.id, title: book.title} }">
+                <router-link :to="{ path: '/chapter', query: { id: this.id, title: book.title } }">
                     <div class="current-detail-catalog">
-                        <span>{{book.updated}} · {{book.lastChapter}}</span>
+                        <span class="deep-grap">{{book.updated}} · {{book.lastChapter}}</span>
                     </div>
                     <div class="turn-to-article">
                         <img src="../../assets/icon/font.png" alt="">
@@ -84,9 +84,9 @@
                     <h4>同类推荐</h4>
                 </div>
                 <div class="recommend-more">
-                    <router-link class="recommend-more-link" :to="{ path: 'recommend', query: {id: this.id,  backbarTitle: '同类推荐'} }">
+                    <a class="recommend-more-link red" @click="redirect">
                         更多 >>
-                    </router-link>
+                    </a>
                 </div>
             </div>
             <div class="recommend-detail">
@@ -110,12 +110,13 @@ import Bookbar from '../Bookbar/Bookbar';
 import api from '../../api/api';
 import util from '../../util/util';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'bookdetail',
     data() {
         return {
             id: '',
-            backbarTitle: '书籍详情',
             book: {},
             recommends: [],
             comments: [],
@@ -123,11 +124,15 @@ export default {
         };
     },
     created() {
+        this.SET_HEADTITLE('书籍详情');
         this.id = this.$route.query.id;
         this.getBookInfo();
     },
     methods: {
-        getBookInfo: function () {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        getBookInfo() {
             api.getBook(this.id)
                 .then(data => {
                     this.book = data;
@@ -151,8 +156,12 @@ export default {
                     });
                 });
         },
-        read: function() {
-            this.$router.push({path: 'chapter', query: {id: this.id, title: this.book.title}});
+        redirect() {
+            this.SET_HEADTITLE('同类推荐');
+            this.$router.push({ path: '/recommend', query: {id: this.id} });
+        },
+        read() {
+            this.$router.push({ path: '/chapter', query: {id: this.id, title: this.book.title} });
         }
     },
     components: {

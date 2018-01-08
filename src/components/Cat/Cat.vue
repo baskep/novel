@@ -1,6 +1,6 @@
 <template>
     <section class="Cat">
-        <Headerbar :headTitle="headTitle"></Headerbar>
+        <Headerbar></Headerbar>
         <Catbar></Catbar>
         <Toobar :index="2"></Toobar>
     </section>
@@ -11,12 +11,17 @@ import Headerbar from '../Header/Header';
 import Catbar from '../Catbar/Catbar';
 import Toobar from '../Toobar/Toobar';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'cat',
-    data() {
-        return {
-            headTitle: '分类'
-        };
+    created() {
+        this.SET_HEADTITLE('分类');
+    },
+    methods: {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ])
     },
     components: {
         'Headerbar': Headerbar,

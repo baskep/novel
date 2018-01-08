@@ -1,0 +1,8 @@
+const types = {
+    SET_HEADTITLE: 'SET_HEADTITLE',
+    SET_FONTSIZE: 'SET_FONTSIZE',
+    SET_SKININDEX: 'SET_SKININDEX',
+    SET_NINGHTMODE: 'SET_NINGHTMODE'
+};
+
+export default types;

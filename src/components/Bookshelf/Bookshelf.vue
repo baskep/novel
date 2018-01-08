@@ -1,21 +1,21 @@
 <template>
     <section class="bookshelf">
-        <Headerbar :headTitle="headTitle"></Headerbar>
+        <Headerbar></Headerbar>
         <section class="empty" v-if="isEmptyShow">
             <router-link to="/featured">
                 <div class="empty-icon">
                 <img src="../../assets/icon/add_book.png" alt="">
                 </div>
-                <p class="empty-notice">快去添加你喜欢的小说吧</p>
+                <p class="empty-notice deep-grap">快去添加你喜欢的小说吧</p>
             </router-link>
         </section>
         <section class="detail-books" v-show="!isPageLoadingShow">
             <div class="detail-book-item" v-for="book in bookShelf" :key="book._id">
                 <img :src="book.cover" alt="">
-                    <router-link :to="{ path: 'chapter', query: {id: book._id, title: book.title} }">
+                    <router-link :to="{ path: 'chapter', query: { id: book._id, title: book.title } }">
                         <div class="detail-book-intro">
                             <h4><b>{{book.title}}</b>
-                                <span class="update-time">
+                                <span class="update-time red">
                                     {{book.updated}}
                                 </span>
                             </h4>
@@ -45,11 +45,12 @@ import Popup from '../Popup/Popup';
 import api from '../../api/api';
 import util from '../../util/util';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'bookshelf',
     data() {
         return {
-            headTitle: '我的书架',
             id: '',
             bookID: [],
             bookShelf: [],
@@ -64,19 +65,23 @@ export default {
         };
     },
     created() {
+        this.SET_HEADTITLE('我的书架');
+        let localStorageData = util.getStore('BOOKSHELF');
         let params = [];
-        let localStorageData = window.localStorage.getItem('bookshelf');
         this.isPageLoadingShow = false;
-        if (localStorageData !== null && localStorageData !== 'null') {
+        if (localStorageData) {
+            params = localStorageData;
             this.isEmptyShow = false;
-            params = JSON.parse(localStorageData);
         } else {
             return;
         }
         this.getBookShelf(params);
     },
     methods: {
-        getBookShelf: function(params) {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        getBookShelf(params) {
             params.map(item => {
                 api.getBook(item)
                     .then(data => {
@@ -88,22 +93,22 @@ export default {
             });
             this.isPageLoadingShow = false;
         },
-        deleteBook: function(id) {
+        deleteBook(id) {
             this.id = id;
             this.options.isPopupShow = true;
         },
-        deleteBookShelf: function() {
+        deleteBookShelf() {
             let index = this.bookID.indexOf(this.id);
             this.bookShelf.splice(index, 1);
             this.bookID.splice(index, 1);
-            window.localStorage.setItem('bookshelf', JSON.stringify(this.bookID));
+            util.setStore('BOOKSHELF', this.bookID);
             if (this.bookShelf.length === 0 || this.bookShelf === null) {
-                window.localStorage.removeItem('bookshelf');
+                util.removeStore('BOOKSHELF');
                 this.isEmptyShow = true;
             }
             this.hidePopup();
         },
-        hidePopup: function() {
+        hidePopup() {
             this.options.isPopupShow = false;
         }
     },

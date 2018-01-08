@@ -3,7 +3,7 @@
         <div id="mask" ref="mask">
         </div>
         <div class="popup-wrapper" ref="popupWrapper">
-            <div class="dialog">
+            <div class="popup-dialog">
                 <h4><b>提示</b></h4>
                 <p>{{options.title}}</p>
                 <div class="operate-button">
@@ -23,7 +23,7 @@
 import util from '../../util/util';
 
 export default {
-    name: 'dialog',
+    name: 'popup',
     data() {
         return {
             $docEle: null,
@@ -44,17 +44,17 @@ export default {
         window.addEventListener('scroll', util.debounce(this.init, 0, 0));
     },
     methods: {
-        init: function() {
+        init() {
             let $clientHeight = this.$docEle.scrollTop + this.$body.scrollTop + this.$body.clientHeight;
             let $clientWidth = this.$body.clientWidth;
             this.$mask.style.height = $clientHeight + 'px';
             this.$mask.style.width = $clientWidth + 'px';
             this.$popupWrapper.style.top = this.$body.clientHeight * 0.5 + 'px';
         },
-        determine: function() {
+        determine() {
             this.$emit(this.options.determine);
         },
-        cancel: function() {
+        cancel() {
             this.$emit(this.options.cancel);
         }
     }

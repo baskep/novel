@@ -1,6 +1,6 @@
 <template>
     <section class="search-result">
-        <Backbar :backbarTitle="backbarTitle"></Backbar>
+        <Backbar></Backbar>
         <Homelist :bookdata="books" style="margin-top: 50px"></Homelist>
         <section v-show="!isLoadShow" class="recommend-end" style="color: #999">
             <p>没有更多了</p>
@@ -15,29 +15,36 @@ import Homelist from '../Homelist/Homelist';
 import Load from '../Load/Load';
 
 import api from '../../api/api';
+import util from '../../util/util';
+
+import {mapMutations} from 'vuex';
 
 export default {
     name: 'searchreuslt',
     data() {
         return {
-            backbarTitle: '搜索结果',
             books: [],
             isLoadShow: true
         };
     },
     created() {
+        this.SET_HEADTITLE('搜索结果');
         this.searchByKeyword();
     },
     methods: {
-        searchByKeyword: function() {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        searchByKeyword() {
             api.searchByKeyword(this.$route.query.keyword)
                 .then(data => {
                     this.books = data;
                     this.books.map(item => {
+                        item.cover = util.initImgURL(item.cover);
                         item.majorCate = item.cat;
                         item.latelyFollower = (item.latelyFollower / 10000).toFixed(2) + '万';
                     });
-                    this.$nextTick(function() {
+                    this.$nextTick(() => {
                         this.isLoadShow = false;
                     });
             });
@@ -50,8 +57,4 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-
-</style>
 

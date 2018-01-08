@@ -30,7 +30,6 @@
             }
             .book-meta-author {
                 font-size: 14px;
-                color: #ed424b;
             }
         }
     }
@@ -46,7 +45,6 @@
         text-align: center;
         h5 {
             font-size: 12px;
-            color: #999;
         }
         p {
             margin-top: 10px;
@@ -105,9 +103,6 @@
 		height: 100%;
 		text-align: right;
     	@include textoverflow(2);
-		span {
-			color: #999;
-		}
   	}
 	.turn-to-article {
 		position: relative;
@@ -197,7 +192,6 @@
 	.recommend-more-link {
 		margin-right: 10px;
 		font-size: 14px;
-		color: #ed424b;
 	}
 	.recommend-detail {
 		margin-top: 20px;

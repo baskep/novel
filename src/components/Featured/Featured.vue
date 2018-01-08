@@ -1,7 +1,7 @@
 <template>
-    <div class="featured">
-        <Headerbar :headTitle="headTitle" :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
-        <div class="featured-books" v-show="isPageShow">
+    <section class="featured">
+        <Headerbar :show="show" :sex="sex" v-on:changeSex="changeSex"></Headerbar>
+        <section class="featured-books" v-show="isPageShow">
             <section class="swiper-banner">
                 <swiper :options="swiperOption">
                     <swiper-slide class="native" v-for="slide in swiperSlides" :key="slide._id" >
@@ -9,20 +9,19 @@
                     </swiper-slide>
                 </swiper>
             </section>
-    
             <section class="book-info" v-for="module in modules" v-if="module.type === 0" :key="module._id">
                 <div class="book-head">
                     <h2 class="book-title">{{ module.title }}</h2>
-                    <router-link class="book-more" :to="{ path: 'Recommend', query: {moduleid: module._id, backbarTitle: module.title} }">
+                    <a class="book-more red" @click="redirect(module)">
                         更多 >>
-                    </router-link>
+                    </a>
                 </div>
                 <Booklist :book="{ id: module._id }" @load-result="loadResult"></Booklist>
             </section>
-        </div>
+        </section>
         <Toobar :index="1"></Toobar>
         <PageLoading v-show="isPageLoadingShow"></PageLoading>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -38,11 +37,12 @@ import PageLoading from '../PageLoading/PageLoading';
 
 import api from '../../api/api';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'featured',
     data() {
         return {
-            headTitle: '精选',
             show: true,
             sex: 'boy',
             bookdata: [],
@@ -63,7 +63,7 @@ export default {
         };
     },
     watch: {
-        loadModules: function () {
+        loadModules() {
             if (this.loadModules.length === 0) {
                 this.isPageLoadingShow = false;
                 this.isPageShow = true;
@@ -71,17 +71,21 @@ export default {
         }
     },
     created() {
+        this.SET_HEADTITLE('精选');
         this.getSwiperPictures();
         this.getModules();
     },
     methods: {
-        getSwiperPictures: function() {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
+        getSwiperPictures() {
             api.getSwiperPictures()
                 .then(data => {
                     this.swiperSlides = data;
                 });
         },
-        getModules: function() {
+        getModules() {
             api.getFeaturedData()
                 .then(data => {
                     data = Array.from(data).sort((a, b) => {
@@ -95,13 +99,17 @@ export default {
                     this.loadModules = Array.from(data, value => value._id);
             });
         },
-        changeSex: function(sex) {
+        changeSex(sex) {
             this.isPageLoadingShow = true;
             this.isPageShow = false;
             this.sex = sex;
             this.getModules();
         },
-        loadResult: function (id) {
+        redirect(module) {
+            this.SET_HEADTITLE(module.title);
+            this.$router.push({path: 'Recommend', query: {moduleid: module._id}});
+        },
+        loadResult(id) {
             this.loadModules.splice(this.loadModules.indexOf(id), 1);
         }
     },

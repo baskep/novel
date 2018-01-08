@@ -32,6 +32,8 @@
 <script>
 import api from '../../api/api';
 
+import util from '../../util/util';
+
 export default {
     name: 'search',
     data() {
@@ -44,15 +46,15 @@ export default {
     },
     created() {
         this.getSearchHotKeywords();
-        let localStorageData = JSON.parse(window.localStorage.getItem('searchHistory'));
-        if (localStorageData !== null) {
+        let localStorageData = util.getStore('searchHistory');
+        if (localStorageData) {
             this.historyKeyWords = localStorageData;
         } else {
             this.historyKeyWords = [];
         }
     },
     methods: {
-        getSearchHotKeywords: function() {
+        getSearchHotKeywords() {
             api.getSearchHotKeywords()
                 .then(data => {
                     data.splice(0, 20).map(data => {
@@ -60,26 +62,26 @@ export default {
                     });
                 });
         },
-        sear: function() {
+        sear() {
             let searchContent = this.$refs.searchArea.value.replace(/\s+/g, '');
             if (searchContent !== undefined && searchContent !== '') {
                 this.pitchItem(searchContent);
             }
         },
-        search: function(item) {
-            this.$router.push({path: '/searchresult', query: {keyword: item}});
+        search(item) {
+            this.$router.push({ path: 'searchresult', query: { keyword: item } });
         },
-        pitchItem: function(item) {
+        pitchItem(item) {
             this.keyword = item;
             if (this.historyKeyWords.indexOf(item) === -1) {
                 this.historyKeyWords.push(item);
-                window.localStorage.setItem('searchHistory', JSON.stringify(this.historyKeyWords));
+                util.setStore('searchHistory', this.historyKeyWords);
             }
             this.search(this.keyword);
         },
-        clearHistory: function() {
+        clearHistory() {
             this.historyKeyWords = [];
-            window.localStorage.removeItem('searchHistory');
+            util.removeStore('searchHistory');
         }
     }
 };

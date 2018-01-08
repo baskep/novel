@@ -1,6 +1,6 @@
 <template>
     <section class="chapter-content">
-        <Backbar :backbarTitle="backbarTitle"></Backbar>
+        <Backbar></Backbar>
         <section class="chapter">
             <div class="chapter-head" v-show="isTitleShow">
                 <span>目录</span>
@@ -23,11 +23,12 @@ import Loading from '../Load/Load';
 
 import api from '../../api/api';
 
+import {mapMutations} from 'vuex';
+
 export default {
     name: 'chapter',
     data() {
         return {
-            backbarTitle: '',
             chapters: [],
             options: {
                 title: '当前章节只限会员才能观看哟~╰(￣▽￣)╮',
@@ -40,34 +41,37 @@ export default {
         };
     },
     created() {
+        this.SET_HEADTITLE(this.$route.query.title);
         this.getChapters();
-        this.backbarTitle = this.$route.query.title;
     },
     methods: {
+        ...mapMutations([
+            'SET_HEADTITLE'
+        ]),
         getChapters: function() {
             api.getChapters(this.$route.query.id)
                 .then(data => {
                     this.chapters = data;
-                    this.$nextTick(function () {
+                    this.$nextTick(() => {
                         this.isLoadingShow = !this.isLoadingShow;
                         this.isTitleShow = !this.isTitleShow;
                     });
                 });
         },
-        reverse: function() {
+        reverse() {
             this.chapters = this.chapters.reverse();
         },
-        readCurrentChapter: function(chapter) {
+        readCurrentChapter(chapter) {
             if (chapter.isVip) {
                 this.options.isPopupShow = true;
             } else {
-                this.$router.push({ path: '/read', query: {chapter: chapter, chapters: this.chapters} });
+                this.$router.push({ path: '/read', query: { chapter: chapter, chapters: this.chapters } });
             }
         },
-        determine: function() {
+        determine() {
             this.hidePopup();
         },
-        hidePopup: function() {
+        hidePopup() {
             this.options.isPopupShow = false;
         }
     },

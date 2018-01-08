@@ -8,17 +8,17 @@
                 <div class="book-introduction">
                     <h2><strong>{{item.title}}</strong></h2>
                     <div class="breif-introduction">
-                        <p>{{item.shortIntro}}</p>                
+                        <p class="deep-grap">{{item.shortIntro}}</p>                
                     </div>
                     <div class="book-bar">
                         <div class="book-author">
                             <img src="../../assets/icon/author.png" alt=""> 
-                            <p>{{item.author}}</p>
+                            <p class="deep-grap">{{item.author}}</p>
                         </div>
                         <div class="book-tag">
                             <span class="book-type">{{item.majorCate}}</span>
-                            <span class="book-state">{{`${item.isSerial ? '连载中' : '已完结'}`}}</span>
-                            <span class="book-popularity">{{item.latelyFollower}}人气</span>
+                            <span class="book-state red">{{`${item.isSerial ? '连载中' : '已完结'}`}}</span>
+                            <span class="book-popularity blue">{{item.latelyFollower}}人气</span>
                         </div>
                     </div>
                 </div>
@@ -44,14 +44,14 @@ export default {
         this.getBooks();
     },
     methods: {
-        getBooks: function() {
+        getBooks() {
             api.getBooks(this.book.id)
                 .then(data => {
                     data = Array.from(data);
                     data.map(item => {
                         this.books.push(item.book);
                     });
-                    this.$nextTick(function () {
+                    this.$nextTick(() => {
                         this.$emit('load-result', this.book.id);
                     });
             });
