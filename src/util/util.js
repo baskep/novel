@@ -68,7 +68,7 @@ export default {
     },
     getStore: name => {
         let obj = JSON.parse(window.localStorage.getItem(name));
-        if (obj !== null && obj !== 'null' && obj !== '') {
+        if (obj) {
             return obj;
         } else {
             return null;

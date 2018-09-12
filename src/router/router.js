@@ -1,14 +1,14 @@
-import Bookshelf from '../components/Bookshelf/Bookshelf.vue';
-import Featured from '../components/Featured/Featured.vue';
-import Classfication from '../components/Cat/Cat.vue';
-import Bookdetail from '../components/Bookdetail/Bookdetail.vue';
-import Recommend from '../components/Recommend/Recommend.vue';
-import Categorydetail from '../components/Catgorydetail/Catgorydetail.vue';
-import Rank from '../components/Rank/Rank.vue';
-import Search from '../components//Search/Search.vue';
-import Searchresult from '../components/Searchresult/Searchresult.vue';
-import Chapter from '../components/Chapter/Chapter.vue';
-import Read from '../components/Read/Read.vue';
+import Bookshelf from '../pages/Bookshelf/Bookshelf.vue';
+import Featured from '../pages/Featured/Featured.vue';
+import Category from '../pages/Category/Category.vue';
+import Categorydetail from '../pages/Catgorydetail/Catgorydetail.vue';
+import Bookdetail from '../pages/Bookdetail/Bookdetail.vue';
+import Recommend from '../pages/Recommend/Recommend.vue';
+import Rank from '../pages/Rank/Rank.vue';
+import Search from '../pages/Search/Search.vue';
+import Searchresult from '../pages/Searchresult/Searchresult.vue';
+import Chapter from '../pages/Chapter/Chapter.vue';
+import Read from '../pages/Read/Read.vue';
 
 let routes = [{
         name: 'bookshelf',
@@ -23,7 +23,7 @@ let routes = [{
     {
         name: 'classfication',
         path: '/classfication',
-        component: Classfication
+        component: Category
     },
     {
         name: 'bookdetail',

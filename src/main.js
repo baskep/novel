@@ -21,6 +21,4 @@ let app = new Vue({
     render: h => h(App)
 }).$mount('#app');
 
-router.push('/bookshelf');
-
 export default app;

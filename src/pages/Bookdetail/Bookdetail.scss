@@ -1,0 +1,211 @@
+.book-detail {
+    min-height: 667px;
+}
+
+.book-wrapper {
+    margin-top: 45px;
+    border-bottom: 1px solid #dadada;
+    .book-meta {
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 90%;
+	}
+	.book-meta-img {
+		float: left;
+		img {
+			width: 66px;
+			height: 88px;
+		}
+	}  
+	.book-meta-info {
+		margin-left: 80px;
+		h4 {
+			margin: 0 0 8px 0px;
+			line-height: 1;
+			font-size: 16px;
+			font-weight: normal;
+			font-family: '微软雅黑';
+		}
+		p {
+			line-height: 1.8;
+		}
+		.book-meta-author {
+			font-size: 14px;
+		}
+	}
+}
+
+.book-read-info {
+    display: flex;
+    border-bottom: 1px solid #dadada;
+    justify-content: space-between;
+    div {
+        margin: 20px 0;
+        width: 33%;
+        text-align: center;
+        h5 {
+            font-size: 12px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    }
+}
+
+.all-introduction {
+    margin: 10px auto;
+    width: 90%;
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+        font-family: '微软雅黑';
+    }
+}
+
+@mixin border($position) {
+    border-#{$position}: 1px solid #dadada;
+}
+
+@mixin textoverflow($line) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+}
+
+.book-detail-catalog {
+    height: 40px;
+    @include border(top);
+    @include border(bottom);
+    span {
+		line-height: 40px;
+		vertical-align: middle;
+	}
+	.catalog-title {
+		float: left;
+		width: 20%;
+		height: 40px;
+		text-align: center;
+		span {
+			font-size: 16px;
+		}
+	}
+	.current-catalog {
+		float: right;
+		width: 80%;
+		height: 40px;
+	}
+	.current-detail-catalog {
+		float: left;
+		width: 80%;
+		height: 100%;
+		text-align: right;
+    	@include textoverflow(2);
+  	}
+	.turn-to-article {
+		position: relative;
+		float: right;
+		width: 20%;
+		height: 100%;
+    	img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -9px;
+			margin-left: -9px;
+			width: 18px;
+			height: 18px;
+    	}
+	}
+}
+
+.hot-comment {
+	margin: 10px 20px;
+	h4 {
+		font-size: 16px;
+		font-family: '微软雅黑'
+	}
+	.hot-com {
+		margin-top: 15px;
+		padding: 5px 0;
+		@include border(bottom);
+		height: 110px;
+		display: flex;
+
+	  }
+	  .hot-com-avatar {
+			width: 20%;
+			height: auto;
+			img {
+				width: 40px;
+				height: 40px;
+			}
+		}
+		.hot-com-title {
+			display: flex;
+			justify-content: space-between;
+			.name {
+				color: #a58d5e;
+			}
+		}
+	  .hot-com-content {
+		width: 80%;
+		.com-content {
+			@include textoverflow(2);
+		}
+		.detail-content {
+			line-height: 1.5;
+			}
+		& > div {
+			margin-top: 5px;
+		}
+	}
+	.com-like {
+		img {
+			float: left;
+			width: 20px;
+			height: 20px;
+		}
+		span {
+			margin-top: 4px;
+			display: inline-block;
+		}
+	}
+}
+
+.recommend {
+	margin-bottom: 70px;
+	.recommend-title {
+		margin-top: 15px;
+		border-left: 2px solid #ed424b;
+		h4 {
+			font-size: 16px;
+			font-family: '\5FAE\8F6F\96C5\9ED1';
+    	}
+  	}
+	& > div,
+	.recommend-detail {
+		display: flex;
+		justify-content: space-between;
+  	}
+	.recommend-more-link {
+		margin-right: 10px;
+		font-size: 14px;
+	}
+	.recommend-detail {
+		margin-top: 20px;
+	}
+	.recommend-detail-books {
+		width: 25%;
+		text-align: center;
+		img {
+			width: 60px;
+			height: 80px;
+		}
+		p {
+			margin-top: 10px;
+		}
+	}
+}

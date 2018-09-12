@@ -62,6 +62,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './Popup.scss';
+    @import './Popup.scss';
 </style>
 

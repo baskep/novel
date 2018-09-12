@@ -20,15 +20,15 @@ header {
         display: table;
         border: 1px solid #fff;
         border-radius: 4px;
-        .nav-item {
-            display: table-cell;
-            font-weight: 400;
-            line-height: 20px;
-            padding: 0 10px;
-            &.active {
-                color: #666;
-                background-color: #fff;
-            }
+    }
+    .nav-item {
+        display: table-cell;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 0 10px;
+        &.active {
+            color: #666;
+            background-color: #fff;
         }
     }
     .search {
